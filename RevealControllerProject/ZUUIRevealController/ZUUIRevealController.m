@@ -554,7 +554,15 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-	return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+	// Return YES for supported orientations
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+	{
+		return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+	}
+	else
+	{
+		return YES;
+	}
 }
 
 #pragma mark - Memory Management
