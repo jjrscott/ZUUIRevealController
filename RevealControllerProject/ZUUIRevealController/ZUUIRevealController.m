@@ -61,6 +61,7 @@
 @property (retain, nonatomic) UIView *frontView;
 @property (retain, nonatomic) UIView *rearView;
 @property (assign, nonatomic) float previousPanOffset;
+@property (assign, nonatomic) BOOL visible;
 
 // Private Methods:
 - (CGFloat)_calculateOffsetForTranslationInView:(CGFloat)x;
@@ -89,6 +90,7 @@
 @synthesize frontView = _frontView;
 @synthesize rearView = _rearView;
 @synthesize delegate = _delegate;
+@synthesize visible = _visible;
 
 #pragma mark - Initialization
 
@@ -564,6 +566,54 @@
 	{
 		return YES;
 	}
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+	if (![self.frontViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.frontViewController viewWillAppear:animated];
+  
+	if (!self.visible && ![self.rearViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.rearViewController viewWillAppear:animated];
+  
+	[super viewWillAppear:animated];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+	if (![self.frontViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.frontViewController viewDidAppear:animated];
+  
+	if (!self.visible && ![self.rearViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.rearViewController viewDidAppear:animated];
+
+	[super viewDidAppear:animated];
+  
+	self.visible = YES;
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+	if (![self.frontViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.frontViewController viewWillDisappear:animated];
+  
+	if (!self.visible && ![self.rearViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.rearViewController viewWillDisappear:animated];
+  
+	[super viewWillDisappear:animated];
+}
+
+- (void) viewDidDisappear:(BOOL)animated
+{
+	if (![self.frontViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.frontViewController viewDidDisappear:animated];
+  
+	if (!self.visible && ![self.rearViewController respondsToSelector:@selector(removeFromParentViewController)])
+		[self.rearViewController viewDidDisappear:animated];
+	
+	[super viewDidDisappear:animated];
+  
+	self.visible = NO;
 }
 
 #pragma mark - Memory Management
