@@ -541,6 +541,7 @@
 	
 	[self _addRearViewControllerToHierarchy:self.rearViewController];
 	[self _addFrontViewControllerToHierarchy:self.frontViewController];	
+  self.rearViewController.view.frame = self.rearView.bounds;
 }
 
 - (void)viewDidUnload
